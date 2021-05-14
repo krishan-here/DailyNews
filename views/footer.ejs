@@ -1,0 +1,57 @@
+<section class="footer">
+    <div class="footer-content">
+        <h2>Get daily updates</h2>
+        <p>we are providing all latest updates with full proof!</p>
+        <button class="btn btn-lg btn-warning" data-toggle="modal" data-target="#modalLoginForm">Sign up</button>
+
+        <div class="handles">
+            <h3>Our social handles!</h3>
+            <div class="circles">
+
+                <div class="circle">
+                    <i class="social-icon fab fa-facebook-f"></i>
+                </div>
+                <div class="circle">
+                    <i class="social-icon fab fa-twitter"></i>
+
+                </div>
+                <div class="circle">
+                    <i class="social-icon fab fa-instagram"></i>
+
+                </div>
+                <div class="circle">
+                    <i class="social-icon fas fa-envelope"></i>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            all copyright reserved @Dipanshu & his friend
+        </div>
+    </div>
+</section>
+
+
+<!-- font awesome -->
+<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    let hrefValue = "/";
+    if ("<%=category%>" != "Home")
+        hrefValue += "<%=category %>";
+    let categoryName = document.querySelector(`.nav-link[href='${hrefValue}']`);
+    categoryName.style.color = "rgb(255, 193, 7)";
+</script>
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+<%- include("header"); -%>
+
+<div class="show-path">
+    <p><a href="/">Home</a> > <a href="/<%=category %>"><%=category %></a> > <%=post.title %></p>
+</div>
+<div class="fullpost">
+    <h1><%=post.title %></h1>
+    <img src="<%=post.img %>" alt="">
+    <p><%=post.body %></p>
+</div>
+
+<%- include("footer"); -%>

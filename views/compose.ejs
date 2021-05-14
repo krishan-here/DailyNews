@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>compose news</title>
+    <!-- bootstrap cdn  -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .form {
+            padding: 10%;
+        }
+
+        .current-post {
+            background-color: rgb(112, 107, 107);
+            padding: 10%;
+        }
+
+        .category {
+            background-color: #fff;
+        }
+
+        .post {
+            height: 50px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .post p {
+            margin: 0 0 0 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="compose">
+
+        <form action="/compose" method="POST" class="form">
+            <div class="form-group">
+
+                <label for="postTitle">Title</label>
+                <input type="text" class="form-control" name="postTitle" id="postTitle">
+
+                <label for="postCategory">Post category</label>
+                <select name="postCategory" id="" class="form-control">
+                    <option value="Sports">Sports</option>
+                    <option value="Bollywood">Bollywood</option>
+                    <option value="Fitness">Fitness</option>
+                </select>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="trend" name="trend">
+                    <label class="form-check-label" for="trend">Make trend</label><br>
+                </div>
+                <label for="image-link">Image source</label>
+                <input type="text" class="form-control" name="imgSrc" id="image-link"
+                    placeholder="use large image for trend">
+
+
+                <label for="postType">Type</label>
+                <select name="postType" id="postType" class="form-control">
+                    <option value="post-1">top stories</option>
+                    <option value="post-2">impotant</option>
+                    <option value="post-3">top-pick</option>
+                </select>
+
+
+
+                <label for="postBody" name="postBody">Post</label>
+                <textarea name="postBody" class="form-control" id="postBody" cols="150" rows="5"></textarea>
+
+            </div>
+            <button type="submit" class="btn btn-primary">Post</button>
+        </form>
+    </section>
+
+    <section class="current-post">
+
+        <div class="category">
+            <h2>Sports Posts</h2>
+            <div class="posts">
+                <% Category.Sports.forEach((post)=>{ %>
+
+                <form action="/delete" method="POST">
+                    <div class="post">
+                        <input type="hidden" name="category" value="<%= post.category %>">
+                        <input type="hidden" name="postId" value="<%= post._id %>">
+                        <input type="checkbox" name="checkbox" id="" onchange="this.form.submit()">
+
+                        <p><%=post.title %></p>
+                    </div>
+                </form>
+                <hr>
+                <% }); %>
+
+            </div>
+        </div>
+
+        <div class="category">
+            <h2>Fitness Posts</h2>
+            <div class="posts">
+                <% Category.Fitness.forEach((post)=>{ %>
+
+                <form action="/delete" method="POST">
+                    <div class="post">
+                        <input type="hidden" name="category" value="<%= post.category %>">
+                        <input type="hidden" name="postId" value="<%= post._id %>">
+                        <input type="checkbox" name="checkbox" id="" onchange="this.form.submit()">
+
+                        <p><%=post.title %></p>
+                    </div>
+                </form>
+                <hr>
+                <% }); %>
+
+            </div>
+
+        </div>
+
+        <div class="category">
+            <h2>Bollywood Posts</h2>
+            <div class="posts">
+                <% Category.Bollywood.forEach((post)=>{ %>
+
+                <form action="/delete" method="POST">
+                    <div class="post">
+                        <input type="hidden" name="category" value="<%= post.category %>">
+                        <input type="hidden" name="postId" value="<%= post._id %>">
+                        <input type="checkbox" name="checkbox" id="" onchange="this.form.submit()">
+
+                        <p><%=post.title %></p>
+                    </div>
+                </form>
+                <hr>
+                <% }); %>
+
+            </div>
+        </div>
+
+
+    </section>
+
+
+</body>
+
+</html>

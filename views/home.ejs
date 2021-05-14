@@ -53,12 +53,8 @@
                     Top stories
                 </div>
 
-                <!-- <div class="post-1">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, tempore!</p>
-                    <img src="../css/image/demo5.jpg" alt="">
-                </div>
-                <hr> -->
-                <!-- <% posts.forEach((post)=>{ %>
+
+                <% posts.forEach((post)=>{ %>
                 <div class="post-1">
                     <p> <%=post.title %> <a href="/<%=category %>/<%=post.title %>" class="read-link">read full
                             article</a></p>
@@ -66,24 +62,21 @@
 
                 </div>
                 <hr>
-                <% }); %> -->
+                <% }); %>
 
             </div>
         </div>
         <div class="col-lg-2">
             <div class="top-post">
 
-                <!-- <div class="post-2">
-                    <img src="../css/image/demo3.jpg" alt="">
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div> -->
 
-                <!-- <% posts.forEach((post)=>{ %>
+
+                <% posts.forEach((post)=>{ %>
                 <div class="post-2">
                     <a href="/<%= category %>/<%= post.title%>"><img src="<%= post.img %>" alt=""></a>
                     <p><%= post.title %></p>
                 </div>
-                <% }); %> -->
+                <% }); %>
             </div>
         </div>
 
@@ -96,13 +89,7 @@
         <div class="pick-posts">
 
 
-            <!-- <div class="post-3">
-                <img src="../css/image/bollywood-star.webp" alt="">
-                <div class="post-3-content">
-                    <span class="tag">style</span>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit, sed!</p>
-                </div>
-            </div> -->
+
             <% posts.forEach((post)=>{ %>
             <%   if(post.type=="post-3"){ %>
             <div class="post-3">

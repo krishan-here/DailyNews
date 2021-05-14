@@ -36,25 +36,32 @@ const Post = mongoose.model("Post", postSchema);
 const Category = mongoose.model("Category", categorySchema);
 const Email = mongoose.model("Email", userSchema);
 //create default document for fitness
-const post1 = new Post({
+const defaultPost1 = new Post({
   category: "Fitness",
   type: "post-1",
-  title: "Nothing",
+  title: "Nothing Post",
   body: "",
   img: "../css/image/demo2.jpg",
 });
-const post2 = new Post({
+const defaultPost2 = new Post({
   category: "Fitness",
   type: "post-2",
-  title:
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.",
-  body: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.",
-  img: "../css/image/demo4.jpg",
+  title: "Nothing Post",
+  body: "",
+  img: "../css/image/demo2.jpg",
+});
+
+const defaultPost3 = new Post({
+  category: "Fitness",
+  type: "post-3",
+  title: "Nothing Post",
+  body: "",
+  img: "../css/image/demo2.jpg",
 });
 
 const Fitness = new Category({
   name: "Fitness",
-  posts: [post1, post2],
+  posts: [defaultPost1, defaultPost2, defaultPost3],
 });
 
 //for bollywood
@@ -246,26 +253,22 @@ app.get("/Sports", (req, res) => {
 
 //compose section
 app.get("/compose", (req, res) => {
-  const category = {
+  const categoryObj = {
     Fitness: [],
     Sports: [],
     Bollywood: [],
   };
-  Category.findOne({ name: "Fitness" }, (err, found) => {
-    if (!err) {
-      category["Fitness"] = found.posts;
+
+  Category.find({}, (err, foundCategory) => {
+    if (err) {
+      console.log(err);
+    } else {
+      foundCategory.forEach((category) => {
+        categoryObj[`${category.name}`] = category.posts;
+      });
+      console.log(categoryObj);
+      res.render("compose", { Category: categoryObj });
     }
-  });
-  Category.findOne({ name: "Sports" }, (err, found) => {
-    if (!err) {
-      category["Sports"] = found.posts;
-    }
-  });
-  Category.findOne({ name: "Bollywood" }, (err, found) => {
-    if (!err) {
-      category["Bollywood"] = found.posts;
-    }
-    res.render("compose", { Category: category });
   });
 });
 

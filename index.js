@@ -8,10 +8,13 @@ const { stringify } = require("querystring");
 const app = express();
 
 // connecting database
-mongoose.connect("mongodb://localhost:27017/newsDB", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  "mongodb+srv://admin-dipanshu:Dipanshu@123@cluster0.hwkix.mongodb.net/newsDB",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 
 const postSchema = mongoose.Schema({
   category: String,
@@ -49,7 +52,7 @@ app.get("/", (req, res) => {
   Category.findOne({ name: "Home" }, (err, foundHome) => {
     if (err) {
       console.log(err);
-      return req.next(err);
+      // return req.next(err);
     } else if (!foundHome) {
       const defaultHome1 = new Post({
         category: "Home",
@@ -164,7 +167,10 @@ categoryArray.forEach((categoryItem) => {
           Sports.save();
         }
 
-        res.redirect("/" + categoryItem);
+        res.render("category", {
+          category: categoryItem,
+          posts: [default1, default2, default3],
+        });
       } else {
         res.render("category", {
           category: foundCategory.name,
@@ -314,6 +320,12 @@ app.post("/sign", (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log("server running on 3000");
+let port = Process.env.PORT;
+
+if (port == null || port == "") {
+  port = 3000;
+}
+
+app.listen(port, () => {
+  console.log("server has started!");
 });

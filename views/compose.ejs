@@ -34,6 +34,19 @@
             padding: 10px;
         }
 
+        .home-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px;
+        }
+
+        .home-btn a {
+            color: black;
+            font-weight: bold;
+
+        }
+
         .post p {
             margin: 0 0 0 20px;
         }
@@ -51,6 +64,7 @@
 
                 <label for="postCategory">Post category</label>
                 <select name="postCategory" id="" class="form-control">
+                    <option value="Home">Home</option>
                     <option value="Sports">Sports</option>
                     <option value="Bollywood">Bollywood</option>
                     <option value="Fitness">Fitness</option>
@@ -81,7 +95,34 @@
         </form>
     </section>
 
+
+
+
     <section class="current-post">
+        <div class="home-btn">
+
+            <button class="btn btn-lg btn-warning "><a href="/">Go to Home Page</a></button>
+        </div>
+        <div class="category">
+            <h2>Home Posts</h2>
+            <div class="posts">
+                <% Category.Home.forEach((post)=>{ %>
+
+                <form action="/delete" method="POST">
+                    <div class="post">
+                        <input type="hidden" name="category" value="<%= post.category %>">
+                        <input type="hidden" name="postId" value="<%= post._id %>">
+                        <input type="checkbox" name="checkbox" id="" onchange="this.form.submit()">
+
+                        <p><%=post.title %></p>
+                    </div>
+                </form>
+                <hr>
+                <% }); %>
+
+            </div>
+        </div>
+
 
         <div class="category">
             <h2>Sports Posts</h2>
@@ -102,6 +143,8 @@
 
             </div>
         </div>
+
+
 
         <div class="category">
             <h2>Fitness Posts</h2>

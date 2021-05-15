@@ -49,8 +49,10 @@ a:hover{
     padding: 0 10px 10% 20px;
 }
 .story{
-    width: 400px;
+    /* width: 400px; */
     background-color: white;
+    overflow-x: hidden;
+    padding: 10px;
 }
 
 .heading{
@@ -149,6 +151,9 @@ justify-content: space-around;
     color: #fff;
     z-index: 1;
     text-align: center;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 
 .post-3-content .tag{

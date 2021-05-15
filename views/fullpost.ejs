@@ -1,7 +1,11 @@
 <%- include("header"); -%>
 
 <div class="show-path">
-    <p><a href="/">Home</a> > <a href="/<%=category %>"><%=category %></a> > <%=post.title %></p>
+    <% if(category == "Home"){ %>
+    <p><a href="/">Home</a> > <%= post.title%></p>
+    <% }else{ %>
+    <p><a href="/">Home</a> > <a href="/<%= category%>"><%= category%></a> > <%= post.title%></p>
+    <% } %>
 </div>
 <div class="fullpost">
     <h1><%=post.title %></h1>

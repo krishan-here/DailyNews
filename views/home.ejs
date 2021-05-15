@@ -6,10 +6,10 @@
 
 
             <div class="carousel-item active">
-                <img class="d-block w-100" src="../css/image/sport.jpg" alt="sport slide">
+                <img class="d-block w-100" src="../css/image/news.jpg" alt="sport slide">
                 <div class="trend-title">
-                    <p>#bollywood</p>
-                    <h2>Lorem ipsum dolor sit amet consectetur.</h2>
+                    <p>#DailyNews</p>
+                    <h2>Get Daily Update with full proof!</h2>
                 </div>
             </div>
 
@@ -55,6 +55,7 @@
 
 
                 <% posts.forEach((post)=>{ %>
+                <%   if(post.type=="post-1"){ %>
                 <div class="post-1">
                     <p> <%=post.title %> <a href="/<%=category %>/<%=post.title %>" class="read-link">read full
                             article</a></p>
@@ -62,7 +63,7 @@
 
                 </div>
                 <hr>
-                <% }); %>
+                <% }}); %>
 
             </div>
         </div>
@@ -72,11 +73,12 @@
 
 
                 <% posts.forEach((post)=>{ %>
+                <%   if(post.type=="post-2"){ %>
                 <div class="post-2">
                     <a href="/<%= category %>/<%= post.title%>"><img src="<%= post.img %>" alt=""></a>
                     <p><%= post.title %></p>
                 </div>
-                <% }); %>
+                <% }}); %>
             </div>
         </div>
 

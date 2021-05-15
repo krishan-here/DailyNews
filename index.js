@@ -35,125 +35,6 @@ const userSchema = mongoose.Schema({
 const Post = mongoose.model("Post", postSchema);
 const Category = mongoose.model("Category", categorySchema);
 const Email = mongoose.model("Email", userSchema);
-//create default document for fitness
-const defaultPost1 = new Post({
-  category: "Fitness",
-  type: "post-1",
-  title: "Nothing Post",
-  body: "",
-  img: "../css/image/demo2.jpg",
-});
-const defaultPost2 = new Post({
-  category: "Fitness",
-  type: "post-2",
-  title: "Nothing Post",
-  body: "",
-  img: "../css/image/demo2.jpg",
-});
-
-const defaultPost3 = new Post({
-  category: "Fitness",
-  type: "post-3",
-  title: "Nothing Post",
-  body: "",
-  img: "../css/image/demo2.jpg",
-});
-
-const Fitness = new Category({
-  name: "Fitness",
-  posts: [defaultPost1, defaultPost2, defaultPost3],
-});
-
-//for bollywood
-const post3 = new Post({
-  category: "Bollywood",
-  type: "post-1",
-  title:
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.",
-  body: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.",
-  img: "../css/image/demo5.jpg",
-});
-const post4 = new Post({
-  category: "Bollywood",
-  type: "post-2",
-  title:
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.",
-  body: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.",
-  img: "../css/image/demo7.jpg",
-});
-
-const Bollywood = new Category({
-  name: "Bollywood",
-  posts: [post3, post4],
-});
-
-//default for sports
-const post5 = new Post({
-  category: "Sports",
-  type: "post-1",
-  title:
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.",
-  body: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.",
-  img: "../css/image/demo5.jpg",
-});
-const post6 = new Post({
-  category: "Sports",
-  type: "post-2",
-  title:
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.",
-  body: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.",
-  img: "../css/image/demo7.jpg",
-});
-
-const Sports = new Category({
-  name: "Sports",
-  posts: [post5, post6],
-});
-
-//default for home
-const post7 = new Post({
-  category: "Home",
-  type: "post-1",
-  title:
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.",
-  body: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.",
-  img: "../css/image/demo5.jpg",
-});
-const post8 = new Post({
-  category: "Home",
-  type: "post-2",
-  title:
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.",
-  body: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.",
-  img: "../css/image/demo7.jpg",
-});
-
-const Home = new Category({
-  name: "Home",
-  posts: [post7, post8],
-});
-
-//trending section
-const post9 = new Post({
-  category: "Bollywood",
-  type: "post-1",
-  title:
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.",
-  body: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.",
-  img: "../css/image/sport.jpg",
-});
-const post10 = new Post({
-  category: "Fitness",
-  type: "post-2",
-  title:
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.",
-  body: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vero, corrupti.",
-  img: "../css/image/texi.jpg",
-});
-const Trend = new Category({
-  name: "Trend",
-  posts: [post9, post10],
-});
 
 // for including all css & image file in server
 app.use(express.static(__dirname + "/public"));
@@ -164,26 +45,45 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // for using ejs
 app.set("view engine", "ejs");
 
-//i want to delete this
-const posts = {
-  trend: [],
-  Bollywood: [],
-  Fitness: [],
-  Sports: [],
-};
-
 app.get("/", (req, res) => {
-  Category.find({}, (err, foundCategory) => {
+  Category.findOne({ name: "Home" }, (err, foundHome) => {
     if (err) {
       console.log(err);
-    } else if (foundCategory.length == 0) {
-      Category.insertMany([Fitness, Bollywood, Sports, Home, Trend], (err) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("added Fitness, Bollywood, Sposts, Home & trend ");
-          res.redirect("/");
-        }
+      return req.next(err);
+    } else if (!foundHome) {
+      const defaultHome1 = new Post({
+        category: "Home",
+        type: "post-1",
+        title: "Nothing Post",
+        body: "",
+        img: "../css/image/nothing.png",
+      });
+      const defaultHome2 = new Post({
+        category: "Home",
+        type: "post-2",
+        title: "Nothing Post",
+        body: "",
+        img: "../css/image/nothing.png",
+      });
+      const defaultHome3 = new Post({
+        category: "Home",
+        type: "post-3",
+        title: "Nothing Post",
+        body: "",
+        img: "../css/image/nothing.png",
+      });
+
+      const Home = new Category({
+        name: "Home",
+        posts: [defaultHome1, defaultHome2, defaultHome3],
+      });
+
+      Home.save();
+      // res.redirect("/");
+      res.render("home", {
+        category: "Home",
+        posts: Home.posts,
+        trend: [],
       });
     } else {
       Category.findOne({ name: "Home" }, (err, foundHome) => {
@@ -192,11 +92,19 @@ app.get("/", (req, res) => {
         } else {
           Category.findOne({ name: "Trend" }, (err, foundTrend) => {
             if (!err) {
-              res.render("home", {
-                category: "Home",
-                posts: foundHome.posts,
-                trend: foundTrend.posts,
-              });
+              if (!foundTrend) {
+                res.render("home", {
+                  category: "Home",
+                  posts: foundHome.posts,
+                  trend: [],
+                });
+              } else {
+                res.render("home", {
+                  category: "Home",
+                  posts: foundHome.posts,
+                  trend: foundTrend.posts,
+                });
+              }
             }
           });
         }
@@ -205,55 +113,72 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/Fitness", (req, res) => {
-  Category.findOne({ name: "Fitness" }, (err, foundCategory) => {
-    if (err) {
-      console.log(err);
-    } else if (!foundCategory) {
-      //nothing posted
-      res.render("category", { category: "Fitness", posts: posts.Fitness });
-    } else {
-      res.render("category", {
-        category: foundCategory.name,
-        posts: foundCategory.posts,
-      });
-    }
-  });
-});
-app.get("/Bollywood", (req, res) => {
-  Category.findOne({ name: "Bollywood" }, (err, foundCategory) => {
-    if (err) {
-      console.log(err);
-    } else if (!foundCategory) {
-      //nothing posted
-      res.render("category", { category: "Bollywood", posts: posts.Bollywood });
-    } else {
-      res.render("category", {
-        category: foundCategory.name,
-        posts: foundCategory.posts,
-      });
-    }
-  });
-});
-app.get("/Sports", (req, res) => {
-  Category.findOne({ name: "Sports" }, (err, foundCategory) => {
-    if (err) {
-      console.log(err);
-    } else if (!foundCategory) {
-      //nothing posted
-      res.render("category", { category: "Sports", posts: posts.Sports });
-    } else {
-      res.render("category", {
-        category: foundCategory.name,
-        posts: foundCategory.posts,
-      });
-    }
+const categoryArray = ["Fitness", "Bollywood", "Sports"];
+
+categoryArray.forEach((categoryItem) => {
+  app.get(`/${categoryItem}`, (req, res) => {
+    Category.findOne({ name: categoryItem }, (err, foundCategory) => {
+      if (err) {
+        console.log(err);
+      } else if (!foundCategory) {
+        //nothing posted
+        const default1 = new Post({
+          category: categoryItem,
+          type: "post-1",
+          title: "Nothing Post",
+          body: "",
+          img: "../css/image/nothing.png",
+        });
+        const default2 = new Post({
+          category: categoryItem,
+          type: "post-2",
+          title: "Nothing Post",
+          body: "",
+          img: "../css/image/nothing.png",
+        });
+        const default3 = new Post({
+          category: categoryItem,
+          type: "post-3",
+          title: "Nothing Post",
+          body: "",
+          img: "../css/image/nothing.png",
+        });
+
+        if (categoryItem == "Fitness") {
+          const Fitness = new Category({
+            name: "Fitness",
+            posts: [default1, default2, default3],
+          });
+          Fitness.save();
+        } else if (categoryItem == "Bollywood") {
+          const Bollywood = new Category({
+            name: "Bollywood",
+            posts: [default1, default2, default3],
+          });
+          Bollywood.save();
+        } else if (categoryItem == "Sports") {
+          const Sports = new Category({
+            name: "Sports",
+            posts: [default1, default2, default3],
+          });
+          Sports.save();
+        }
+
+        res.redirect("/" + categoryItem);
+      } else {
+        res.render("category", {
+          category: foundCategory.name,
+          posts: foundCategory.posts,
+        });
+      }
+    });
   });
 });
 
 //compose section
 app.get("/compose", (req, res) => {
   const categoryObj = {
+    Home: [],
     Fitness: [],
     Sports: [],
     Bollywood: [],
@@ -266,7 +191,6 @@ app.get("/compose", (req, res) => {
       foundCategory.forEach((category) => {
         categoryObj[`${category.name}`] = category.posts;
       });
-      console.log(categoryObj);
       res.render("compose", { Category: categoryObj });
     }
   });
@@ -289,8 +213,17 @@ app.post("/compose", (req, res) => {
   if (istrend) {
     Category.findOne({ name: "Trend" }, (err, foundTrend) => {
       if (!err) {
-        foundTrend.posts.push(post);
-        foundTrend.save();
+        if (!foundTrend) {
+          //create trend category
+          const Trend = new Category({
+            name: "Trend",
+            posts: [post],
+          });
+          Trend.save();
+        } else {
+          foundTrend.posts.push(post);
+          foundTrend.save();
+        }
       }
     });
   }
@@ -300,22 +233,31 @@ app.post("/compose", (req, res) => {
       foundCategory.save();
     }
   });
-  res.redirect("/" + categoryName);
+  if (categoryName == "Home") res.redirect("/");
+  else res.redirect("/" + categoryName);
 });
 
 // read more section
-app.get("/:postCategory/:postTitle", (req, res) => {
+app.get("/:postCategory/:postTitle", (req, res, next) => {
   const category = req.params.postCategory;
   const title = req.params.postTitle;
-  Category.findOne({ name: category }, (err, foundCategory) => {
-    if (!err) {
-      foundCategory.posts.forEach((post) => {
-        if (post.title == title) {
-          res.render("fullpost", { category: category, post: post });
-        }
-      });
-    }
-  });
+  if (title == "Nothing Post") {
+    if (category == "Home") res.redirect("/");
+    else res.redirect("/" + category);
+  } else {
+    Category.findOne({ name: category }, (err, foundCategory) => {
+      if (err) {
+        console.log(err);
+      } else {
+        foundCategory.posts.forEach((post) => {
+          //click on post
+          if (post.title == title) {
+            res.render("fullpost", { category: category, post: post });
+          }
+        });
+      }
+    });
+  }
 });
 
 //delete post
@@ -330,12 +272,11 @@ app.post("/delete", (req, res) => {
     (err, foundCategory) => {
       if (err) {
         console.log(err);
-      } else {
-        // deleted successfully
-        // res.redirect("/compose");
       }
     }
   );
+
+  // delete if it is on trend also
   Category.findOneAndUpdate(
     { name: "Trend" },
     { $pull: { posts: { _id: postId } } },

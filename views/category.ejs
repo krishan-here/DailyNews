@@ -14,17 +14,19 @@
                     Top stories
                 </div>
 
+                <div class="row">
 
-                <% posts.forEach((post)=>{ %>
-                <%   if(post.type=="post-1"){ %>
-                <div class="post-1">
-                    <p> <%=post.title %> <a href="/<%=category %>/<%=post.title %>" class="read-link">read full
-                            article</a></p>
-                    <img src="<%= post.img %>" alt="">
+                    <% posts.forEach((post)=>{ %>
+                    <%   if(post.type=="post-1"){ %>
+                    <div class="post-1 col-lg-12 col-md-6 col-sm-6">
+                        <p> <%=post.title %> <a href="/<%=category %>/<%=post.title %>" class="read-link">read full
+                                article</a></p>
+                        <img src="<%= post.img %>" alt="">
 
+                    </div>
+                    <hr>
+                    <% }}); %>
                 </div>
-                <hr>
-                <% }}); %>
 
             </div>
         </div>
@@ -49,20 +51,24 @@
         </div>
         <div class="pick-posts">
 
+            <div class="row justify-content-around">
 
-            <% posts.forEach((post)=>{ %>
-            <%   if(post.type=="post-3"){ %>
-            <div class="post-3">
-                <a href="/<%= category %>/<%= post.title%>">
-                    <img src="<%= post.img %>" alt="">
-                    <div class="post-3-content">
-                        <span class="tag">cool</span>
-                        <p><%= post.title%></p>
-                    </div>
-                </a>
+                <% posts.forEach((post)=>{ %>
+                <%   if(post.type=="post-3"){ %>
+                <div class="post-3">
+                    <a href="/<%= category %>/<%= post.title%>">
+                        <img src="<%= post.img %>" alt="">
+                        <div class="post-3-content">
+                            <% if(post.title !="Nothing Post"){ %>
+                            <span class="tag"><%= category%></span>
+                            <% } %>
+                            <p><%= post.title%></p>
+                        </div>
+                    </a>
+                </div>
+                <% }}); %>
+
             </div>
-            <% }}); %>
-
         </div>
     </div>
 
